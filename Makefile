@@ -1,8 +1,9 @@
-CPPFLAGS =	-std=c++14 -stdlib=libstdc++
+CPPFLAGS =	-std=c++14 -stdlib=libstdc++ -g
 LDFLAGS =	-lzmq -lstdc++
 TARGETS =	hwserver hwclient echo_server	\
 		wuserver wuclient		\
-		taskvent taskwork tasksink
+		taskvent taskwork tasksink	\
+		mspoller
 
 # def target(name):
 #     print """%s: %s.cc
@@ -33,6 +34,9 @@ taskwork: taskwork.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
 
 tasksink: tasksink.cc
+	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
+
+mspoller: mspoller.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
 
 .PHONY: clean

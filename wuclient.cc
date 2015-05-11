@@ -16,7 +16,7 @@ main(int argc, char *argv[])
 
 	int	i;
 	long	total_temp = 0;
-	for (i = 0; i < 10000000; i++) {
+	for (i = 0; i < 100; i++) {
 		zmq::message_t	update;
 		size_t		counter;
 		int		zipcode, temp, relhumidity;
