@@ -1,7 +1,3 @@
-//
-// Created by kyle on 5/11/15.
-//
-
 #ifndef SIKEVAS_UTIL_H
 #define SIKEVAS_UTIL_H
 

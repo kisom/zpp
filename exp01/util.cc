@@ -1,7 +1,3 @@
-//
-// Created by kyle on 5/11/15.
-//
-
 #include <cstring>
 
 #include <google/protobuf/message.h>
