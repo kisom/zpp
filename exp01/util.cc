@@ -11,21 +11,26 @@
 
 
 bool
-parse_zmq_message(zmq::message_t *zmsg, google::protobuf::Message *pbmsg)
+zmq_receive(zmq::socket_t *sock, google::protobuf::Message *pbmsg)
 {
-    std::string data((char *)zmsg->data(), zmsg->size());
-    return pbmsg->ParseFromString(data);
+	zmq::message_t	zmsg;
+	if (!sock->recv(&zmsg)) {
+		return false;
+	}
+
+	std::string data((char *)zmsg.data(), zmsg.size());
+	return pbmsg->ParseFromString(data);
 }
 
 bool
-serialize_zmq_message(zmq::message_t *zmsg, google::protobuf::Message *pbmsg)
+zmq_send(zmq::socket_t *sock, google::protobuf::Message *pbmsg)
 {
-    std::string data;
+	std::string data;
 
-    if (!pbmsg->SerializeToString(&data)) {
-        return false;
-    }
-    zmsg->rebuild(data.size());
-    memcpy((void *)zmsg->data(), data.c_str(), data.size());
-    return true;
+	if (!pbmsg->SerializeToString(&data)) {
+		return false;
+	}
+	zmq::message_t	zmsg(data.size());
+	memcpy((void *)zmsg.data(), data.c_str(), data.size());
+	return sock->send(zmsg);
 }

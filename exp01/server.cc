@@ -15,11 +15,8 @@ main(void)
 	sock.bind("tcp://*:5554");
 
 	while (true) {
-		zmq::message_t	msg;
-		sock.recv(&msg);
-
 		msg::Message	m;
-		if (!parse_zmq_message(&msg, &m)) {
+		if (!zmq_receive(&sock, &m)) {
 
 			throw std::runtime_error("failed to parse message");
 		}
@@ -27,13 +24,11 @@ main(void)
 		std::cout << "Received message " << m.contents()
 			  << " from UID " << m.uid() << std::endl;
 
-		zmq::message_t	rep;
 		msg::Ack	ack;
 		ack.set_ok(true);
 
-		if (!serialize_zmq_message(&rep, &ack)) {
+		if (!zmq_send(&sock, &ack)) {
 			throw std::runtime_error("failed to serialize ack");
 		}
-		sock.send(rep);
 	}
 }
