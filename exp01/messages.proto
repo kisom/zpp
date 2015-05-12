@@ -1,0 +1,11 @@
+package msg;
+
+message Message {
+	optional string contents = 1;
+	optional uint32 uid = 2;
+};
+
+message Ack {
+	optional bool ok = 1;
+};
+
