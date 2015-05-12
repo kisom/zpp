@@ -4,6 +4,7 @@
 
 #include <zmq.hpp>
 #include "messages.pb.h"
+#include "util.h"
 
 
 int
@@ -18,23 +19,21 @@ main(void)
 		sock.recv(&msg);
 
 		msg::Message	m;
-		if (!m.ParseFromString(std::string((char *)msg.data(), msg.size()))) {
+		if (!parse_zmq_message(&msg, &m)) {
+
 			throw std::runtime_error("failed to parse message");
 		}
 
 		std::cout << "Received message " << m.contents()
 			  << " from UID " << m.uid() << std::endl;
 
+		zmq::message_t	rep;
 		msg::Ack	ack;
 		ack.set_ok(true);
 
-		std::string	ack_ser;
-		if (!ack.SerializeToString(&ack_ser)) {
+		if (!serialize_zmq_message(&rep, &ack)) {
 			throw std::runtime_error("failed to serialize ack");
 		}
-
-		zmq::message_t	rep(ack_ser.size());
-		memcpy((void *)rep.data(), ack_ser.c_str(), ack_ser.size());
 		sock.send(rep);
 	}
 }

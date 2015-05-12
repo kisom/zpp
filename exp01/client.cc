@@ -6,6 +6,7 @@
 
 #include <zmq.hpp>
 #include "messages.pb.h"
+#include "util.h"
 
 
 int
@@ -20,17 +21,15 @@ main(int argc, char *argv[])
 	zmq::socket_t	sock(ctx, ZMQ_REQ);
 	sock.connect("tcp://localhost:5554");
 
-	msg::Message m;
+	zmq::message_t	req;
+	msg::Message	m;
 	m.set_contents(argv[1]);
 	m.set_uid((uint32_t)atoi(argv[2]));
 
-	std::string	m_ser;
-	if (!m.SerializeToString(&m_ser)) {
+	if (!serialize_zmq_message(&req, &m)) {
 		throw std::runtime_error("failed to serialise message");
 	}
 
-	zmq::message_t	req(m_ser.size());
-	memcpy((void *)req.data(), m_ser.c_str(), m_ser.size());
 	sock.send(req);
 	std::cout << "Message sent.\n";
 
@@ -38,7 +37,7 @@ main(int argc, char *argv[])
 	sock.recv(&rep);
 
 	msg::Ack	ack;
-	if (!ack.ParseFromString(std::string((char *)rep.data(), rep.size()))) {
+	if (!parse_zmq_message(&rep, &ack)) {
 		throw std::runtime_error("failed to parse ack");
 	}
 

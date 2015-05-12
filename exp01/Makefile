@@ -1,14 +1,15 @@
 targets =	server client
+extras =	messages.pb.h messages.pb.cc util.h util.cc
 LDFLAGS =	-lprotobuf -lzmq -lstdc++
-CPPFLAGS =	-g -std=c++14 messages.pb.cc
+CPPFLAGS =	-g -std=c++14 messages.pb.cc util.cc
 
 .PHONY: all
 all: $(targets)
 
-server: server.cc messages.pb.cc messages.pb.h
+server: server.cc $(extras)
 	clang -o $@ $(CPPFLAGS) server.cc $(LDFLAGS)
 
-client: client.cc messages.pb.cc messages.pb.h
+client: client.cc $(extras)
 	clang -o $@ $(CPPFLAGS) client.cc $(LDFLAGS)
 
 messages.pb.cc: messages.proto
