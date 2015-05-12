@@ -1,1 +1,13 @@
 .*.sw?
+exp01/messages.pb.*
+exp01/server
+exp01/client
+hwserver
+hwclient
+echo_server
+wuserver
+wuclient
+taskvent
+taskwork
+tasksink
+mspoller

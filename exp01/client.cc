@@ -46,4 +46,7 @@ main(int argc, char *argv[])
 	} else {
 		std::cout << "Failed\n";
 	}
+
+	sock.close();
+	ctx.close();
 }
