@@ -3,7 +3,8 @@ LDFLAGS =	-lzmq -lstdc++
 TARGETS =	hwserver hwclient echo_server	\
 		wuserver wuclient		\
 		taskvent taskwork tasksink	\
-		mspoller
+		mspoller			\
+		rrclient
 
 # def target(name):
 #     print """%s: %s.cc
@@ -37,6 +38,9 @@ tasksink: tasksink.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
 
 mspoller: mspoller.cc
+	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
+
+rrclient: rrclient.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
 
 .PHONY: clean
