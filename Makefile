@@ -4,7 +4,8 @@ TARGETS =	hwserver hwclient echo_server	\
 		wuserver wuclient		\
 		taskvent taskwork tasksink	\
 		mspoller			\
-		rrclient rrbroker rrworker
+		rrclient rrbroker rrworker	\
+		taskwork2 tasksink2
 
 # def target(name):
 #     print """%s: %s.cc
@@ -47,6 +48,12 @@ rrworker: rrworker.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
 
 rrbroker: rrbroker.cc
+	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
+
+taskwork2: taskwork2.cc
+	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
+
+tasksink2: tasksink2.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) 
 
 .PHONY: clean
