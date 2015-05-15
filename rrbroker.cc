@@ -13,4 +13,6 @@ main(void)
 	backend.bind("tcp://*:5560");
 
 	zmq::proxy(frontend, backend, NULL);
+
+	return 0;
 }
