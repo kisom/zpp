@@ -20,3 +20,5 @@ mtserver
 mtrelay
 syncpub
 syncsub
+psenvpub
+psenvsub
