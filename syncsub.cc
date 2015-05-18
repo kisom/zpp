@@ -11,6 +11,9 @@ main(void)
 	sub.connect("tcp://localhost:5561");
 	sub.setsockopt(ZMQ_SUBSCRIBE, "", 0);
 
+	// Need to wait for subscription.
+	sleep(2);
+
 	std::cout << "waiting for subscription\n";
 
 	zmq::socket_t	sync(ctx, ZMQ_REQ);
