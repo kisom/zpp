@@ -6,7 +6,8 @@ TARGETS =	hwserver hwclient echo_server	\
 		mspoller			\
 		rrclient rrbroker rrworker	\
 		taskwork2 tasksink2		\
-		mtserver mtrelay
+		mtserver mtrelay		\
+		syncpub syncsub
 
 # def target(name):
 #     print """%s: %s.cc
@@ -61,6 +62,12 @@ mtserver: mtserver.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) -lpthread
 
 mtrelay: mtrelay.cc
+	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) -lpthread
+
+syncpub: syncpub.cc
+	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) -lpthread
+
+syncsub: syncsub.cc
 	clang -o $@ $(CPPFLAGS) $< $(LDFLAGS) -lpthread
 
 .PHONY: clean

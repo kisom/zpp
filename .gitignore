@@ -17,3 +17,6 @@ rrworker
 tasksink2
 taskwork2
 mtserver
+mtrelay
+syncpub
+syncsub
